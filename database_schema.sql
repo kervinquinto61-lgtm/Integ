@@ -1,11 +1,40 @@
+CREATE TABLE `clientes` (
+  `id_cliente` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(120) DEFAULT NULL,
+  `tipo` ENUM('PERSONA','EMPRESA') DEFAULT NULL,
+  `telefono` VARCHAR(20) DEFAULT NULL,
+  `email` VARCHAR(100) DEFAULT NULL,
+  PRIMARY KEY (`id_cliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `roles` (
+  `id_rol` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (`id_rol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `productos` (
+  `id_producto` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(120) DEFAULT NULL,
+  `descripcion` TEXT DEFAULT NULL,
+  `precio` DECIMAL(10,2) DEFAULT NULL,
+  `stock` INT(11) DEFAULT NULL,
+  `stock_minimo` INT(11) DEFAULT NULL,
+  `proveedor` VARCHAR(100) DEFAULT NULL,
+  PRIMARY KEY (`id_producto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
-
-
-
-// respetar el orden, esta son las ultimas 4 tablas
+CREATE TABLE `usuarios` (
+  `id_usuario` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) DEFAULT NULL,
+  `usuario` VARCHAR(50) DEFAULT NULL,
+  `password` VARCHAR(255) DEFAULT NULL,
+  `id_rol` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE KEY `usuario` (`usuario`),
+  KEY `id_rol` (`id_rol`),
+  CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS ventas (
   id_venta INT(11) NOT NULL AUTO_INCREMENT,
